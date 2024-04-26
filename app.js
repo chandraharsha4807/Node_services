@@ -1,10 +1,14 @@
+// With postgres DB
+
 const express = require("express");
-const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const setRouter = require("./apiRoutes/mdRoutes");
+const setRouter = require("./apiRoutes/psqlRoutes");
+
 const app = express();
+
+setRouter.userRoutes(app);
 
 dotenv.config();
 app.use(bodyParser.json());
@@ -15,23 +19,10 @@ app.use(
   })
 );
 
-setRouter.userRoutes(app);
-
-mongoose.connect(process.env.MDB_URL);
-
-mongoose.connection.on("error", () => {
-  console.log("Database connection error");
-});
-
-mongoose.connection.on("open", () => {
-  console.log("Database Connection is open");
-});
-
 app.use((req, res, next) => {
   const error = new Error("Something went wrong");
   next(error);
 });
-
 // Error-handling Middleware
 app.use((err, req, res, next) => {
   console.error("Error:", err.message);
