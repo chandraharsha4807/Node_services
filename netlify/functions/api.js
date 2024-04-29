@@ -1,21 +1,22 @@
 const express = require("express");
+const serverless = require("serverless-http");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const setRouter = require("./apiRoutes/mdRoutes");
-const app = express();
+const api = express();
 
 dotenv.config();
-app.use(bodyParser.json());
-app.use(cors());
-app.use(
+api.use(bodyParser.json());
+api.use(cors());
+api.use(
   bodyParser.urlencoded({
     extended: true,
   })
 );
 
-setRouter.userRoutes(app);
+setRouter.userRoutes(api);
 
 const connectDB = async () => {
   try {
@@ -36,17 +37,19 @@ mongoose.connection.on("open", () => {
   console.log("Database Connection is open");
 });
 
-app.use((req, res, next) => {
+api.use((req, res, next) => {
   const error = new Error("Something went wrong");
   next(error);
 });
 
 // Error-handling Middleware
-app.use((err, req, res, next) => {
+api.use((err, req, res, next) => {
   console.error("Error:", err.message);
   res.status(500).send("Internal Server Error");
 });
 
-app.listen(process.env.PORT, () => {
+api.listen(process.env.PORT, () => {
   console.log(`App running on port ${process.env.PORT}.`);
 });
+
+module.exports.handler = serverless(api);
