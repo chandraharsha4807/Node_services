@@ -7,6 +7,7 @@ const setRouter = require("./apiRoutes/mdRoutes");
 const app = express();
 
 dotenv.config();
+
 app.use(bodyParser.json());
 app.use(cors());
 app.use(
@@ -36,6 +37,10 @@ mongoose.connection.on("open", () => {
   console.log("Database Connection is open");
 });
 
+app.listen(process.env.PORT, () => {
+  console.log(`App running on port ${process.env.PORT}.`);
+});
+
 app.use((req, res, next) => {
   const error = new Error("Something went wrong");
   next(error);
@@ -45,8 +50,4 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
   console.error("Error:", err.message);
   res.status(500).send("Internal Server Error");
-});
-
-app.listen(process.env.PORT, () => {
-  console.log(`App running on port ${process.env.PORT}.`);
 });
