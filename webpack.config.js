@@ -1,4 +1,5 @@
 const path = require("path");
+const webpackNodeExternals = require('webpack-node-externals')
 
 module.exports = {
   target: "node",
@@ -7,6 +8,7 @@ module.exports = {
     filename: "[name].bundle.js",
     path: path.resolve(__dirname, "deploy"),
   },
+  externals: [webpackNodeExternals()],
   module: {
     rules: [
       {
@@ -20,10 +22,9 @@ module.exports = {
         },
       },
       {
-        test: /\.(node)$/,
+        test: /\.(jpg|png)$/i,
         type: "asset/resource",
       },
     ],
   },
-  // Additional configuration goes here
 };

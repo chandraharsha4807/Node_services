@@ -29,14 +29,6 @@ const connectDB = async () => {
 
 connectDB();
 
-mongoose.connection.on("error", () => {
-  console.log("Database connection error");
-});
-
-mongoose.connection.on("open", () => {
-  console.log("Database Connection is open");
-});
-
 app.listen(process.env.PORT, () => {
   console.log(`App running on port ${process.env.PORT}.`);
 });
