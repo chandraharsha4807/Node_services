@@ -9,6 +9,7 @@ const setRouter = require("../../apiRoutes/mdRoutes");
 const api = express();
 
 dotenv.config();
+
 api.use(bodyParser.json());
 api.use(cors());
 api.use(
@@ -19,17 +20,11 @@ api.use(
 
 const router = Router();
 
-router.get("/", (req, res) => {
-  res.send("hello world");
-});
-
 setRouter.userRoutes(router);
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(
-      "mongodb+srv://ganivadaharsha998:Welcome1@chandradb.h2lzfzb.mongodb.net/"
-    );
+    await mongoose.connect(process.env.MDB_URL);
     console.log("Database Connection is open");
   } catch (error) {
     console.error("Database connection error:", error);
@@ -38,8 +33,8 @@ const connectDB = async () => {
 
 connectDB();
 
-api.listen("3000", () => {
-  console.log(`App running on port 3000.`);
+api.listen(process.env.PORT, () => {
+  console.log(`App running on port ${process.env.PORT}.`);
 });
 api.use("/api/", router);
 module.exports.handler = serverless(api);
