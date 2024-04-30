@@ -24,7 +24,9 @@ setRouter.userRoutes(api);
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MDB_URL);
+    await mongoose.connect(
+      "mongodb+srv://ganivadaharsha998:Welcome1@chandradb.h2lzfzb.mongodb.net/"
+    );
     console.log("Database Connection is open");
   } catch (error) {
     console.error("Database connection error:", error);
@@ -33,9 +35,8 @@ const connectDB = async () => {
 
 connectDB();
 
-
-api.listen(process.env.PORT, () => {
-  console.log(`App running on port ${process.env.PORT}.`);
+api.listen("3000", () => {
+  console.log(`App running on port 3000.`);
 });
 
 module.exports.handler = serverless(api);
