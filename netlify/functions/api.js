@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const setRouter = require("./apiRoutes/mdRoutes");
+const setRouter = require("../../apiRoutes/mdRoutes");
 const api = express();
 
 dotenv.config();
