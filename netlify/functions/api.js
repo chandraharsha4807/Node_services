@@ -1,6 +1,7 @@
 const express = require("express");
 const serverless = require("serverless-http");
 const mongoose = require("mongoose");
+const { Router } = require("express");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -16,11 +17,13 @@ api.use(
   })
 );
 
-api.get("/", (req, res) => {
+const router = Router();
+
+router.get("/", (req, res) => {
   res.send("hello world");
 });
 
-setRouter.userRoutes(api);
+setRouter.userRoutes(router);
 
 const connectDB = async () => {
   try {
@@ -38,5 +41,5 @@ connectDB();
 api.listen("3000", () => {
   console.log(`App running on port 3000.`);
 });
-
+api.use("/api/", router);
 module.exports.handler = serverless(api);
