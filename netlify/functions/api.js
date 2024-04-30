@@ -16,6 +16,10 @@ api.use(
   })
 );
 
+api.get("/", (req, res) => {
+  res.send("hello world");
+});
+
 setRouter.userRoutes(api);
 
 const connectDB = async () => {
