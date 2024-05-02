@@ -28,8 +28,10 @@ const createUser = async (request, response) => {
       password: request.body.password,
       status: request.body.status,
     };
-    const data = await new userSchema(newUser).save();
-    response.send(data);
+    await new userSchema(newUser).save();
+    response
+      .status(200)
+      .send({ status: "SUCCESS", message: "User creation success" });
   } catch (e) {
     response.send(e);
   }
@@ -45,10 +47,12 @@ const updateUser = async (request, response) => {
       password: request.body.password,
       status: request.body.status,
     };
-    const data = await userSchema.findByIdAndUpdate(userId, updatedUser, {
+    await userSchema.findByIdAndUpdate(userId, updatedUser, {
       new: true,
     });
-    response.send(data);
+    response
+      .status(200)
+      .send({ status: "SUCCESS", message: "User updation success" });
   } catch (e) {
     response.send(e);
   }
@@ -57,8 +61,10 @@ const updateUser = async (request, response) => {
 const deleteUser = async (request, response) => {
   try {
     const userId = request.body.id;
-    const data = await userSchema.findByIdAndDelete(userId);
-    response.send(data);
+    await userSchema.findByIdAndDelete(userId);
+    response
+      .status(200)
+      .send({ status: "SUCCESS", message: "User deleted successfully" });
   } catch (e) {
     response.send(e);
   }
