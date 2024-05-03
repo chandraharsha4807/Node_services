@@ -11,7 +11,7 @@ const userRoutes = (app) => {
   app.post("/user/create", dbQueries.createUser);
   app.put("/user/:id/update", dbQueries.updateUser);
   app.delete("/user/delete", dbQueries.deleteUser);
-  app.post("/graphQl/user", gqlDBQueries.getUsers);
+  app.post("/graphql/user", gqlDBQueries.getUsers);
 };
 
 module.exports = {
