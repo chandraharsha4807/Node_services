@@ -41,7 +41,7 @@ api.listen(process.env.PORT, () => {
 
 api.use("/api/", router);
 
-app.use(
+api.use(
   "/api/graphql/users",
   graphqlHTTP({
     schema,
