@@ -1,5 +1,4 @@
 const dbQueries = require("../queries/mdQueries");
-const gqlDBQueries = require("../queries/gqlQueries");
 
 const userRoutes = (app) => {
   app.post("/signup", dbQueries.registerUser);
@@ -11,7 +10,6 @@ const userRoutes = (app) => {
   app.post("/user/create", dbQueries.createUser);
   app.put("/user/:id/update", dbQueries.updateUser);
   app.delete("/user/delete", dbQueries.deleteUser);
-  app.post("/graphql/users", gqlDBQueries.getUsers);
 };
 
 module.exports = {

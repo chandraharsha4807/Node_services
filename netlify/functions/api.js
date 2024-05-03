@@ -1,11 +1,13 @@
 const express = require("express");
 const serverless = require("serverless-http");
 const mongoose = require("mongoose");
+const { graphqlHTTP } = require("express-graphql");
 const { Router } = require("express");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const setRouter = require("../../apiRoutes/mdRoutes");
+const schema = require("../../resolvers/resolver");
 const api = express();
 
 dotenv.config();
@@ -38,4 +40,13 @@ api.listen(process.env.PORT, () => {
 });
 
 api.use("/api/", router);
+
+app.use(
+  "/api/graphql/users",
+  graphqlHTTP({
+    schema,
+    graphiql: true,
+  })
+);
+
 module.exports.handler = serverless(api);
