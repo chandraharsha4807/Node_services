@@ -36,5 +36,6 @@ connectDB();
 api.listen(process.env.PORT, () => {
   console.log(`App running on port ${process.env.PORT}.`);
 });
+
 api.use("/api/", router);
 module.exports.handler = serverless(api);

@@ -1,9 +1,11 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const { graphqlHTTP } = require("express-graphql");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const setRouter = require("./apiRoutes/mdRoutes");
+const schema = require("./resolvers/resolver");
 const app = express();
 
 dotenv.config();
@@ -32,6 +34,14 @@ connectDB();
 app.listen(process.env.PORT, () => {
   console.log(`App running on port ${process.env.PORT}.`);
 });
+
+app.use(
+  "/graphql/users",
+  graphqlHTTP({
+    schema,
+    graphiql: true,
+  })
+);
 
 app.use((req, res, next) => {
   const error = new Error("Something went wrong");
